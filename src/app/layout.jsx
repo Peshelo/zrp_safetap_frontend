@@ -7,8 +7,8 @@ import "./global.css";
 
 
 export const metadata = {
-  title: 'Modernize Starterkit Demo',
-  description: 'Modernize Starterkit kit',
+  title: 'ZRP System',
+  description: 'ZRP Case Platform',
 }
 
 export default function RootLayout({ children }) {
