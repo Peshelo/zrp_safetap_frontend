@@ -86,9 +86,9 @@ const ChatListing = () => {
         </Badge>
         <Box>
           <Typography variant="body1" fontWeight={600}>
-            Mathew Anderson
+            Peshel Gomo
           </Typography>
-          <Typography variant="body2">Designer</Typography>
+          <Typography variant="body2">Developer</Typography>
         </Box>
       </Box>
       {/* ------------------------------------------- */}

@@ -114,19 +114,19 @@ const Menuitems = [
     title: 'Police Stations',
     subtitle: 'List of all police stations',
     icon: IconBuilding,
-    href: '/police-stations',
+    href: '/merchant/police-stations',
     children: [
       {
         id: uniqueId(),
         title: 'View Station',
         icon: IconBuilding,
-        href: '/police-stations',
+        href: '/merchant/police-stations',
       },
        {
         id: uniqueId(),
         title: 'Create New Station',
         icon: IconPlus,
-        href: '/police-stations/create',
+        href: '/merchant/police-stations/create',
       },
     ],
   },

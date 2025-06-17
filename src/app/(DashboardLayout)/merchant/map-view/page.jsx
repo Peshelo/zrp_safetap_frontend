@@ -42,6 +42,7 @@ import {
   Card,
   CardContent,
   DialogActions,
+  Stack,
 } from "@mui/material";
 import {
   Close as CloseIcon,
@@ -274,25 +275,69 @@ function MapPage() {
               latitude={mycase.latitude}
               onClick={() => setSelectedCase(mycase)}
             >
-              <div className="flex flex-col justify-center items-center">
-                <div className="relative flex items-center justify-center">
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   {marker.pulse && (
-                    <span className="absolute w-10 h-10 rounded-full bg-red-500 opacity-75 animate-ping"></span>
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        width: 40,
+                        height: 40,
+                        borderRadius: '50%',
+                        backgroundColor: 'red',
+                        opacity: 0.75,
+                        animation: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
+                        '@keyframes ping': {
+                          '75%, 100%': {
+                            transform: 'scale(2)',
+                            opacity: 0,
+                          },
+                        },
+                      }}
+                    />
                   )}
-                  <div className={`rounded-full flex items-center justify-center ${marker.className}`}>
+                  <Box
+                    sx={{
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor: 'white',
+                      border: '2px solid',
+                      borderColor: marker.className.includes('border-blue-600') ? 'primary.main' :
+                                  marker.className.includes('border-orange-600') ? 'orange' :
+                                  marker.className.includes('border-white') ? 'white' : 'grey.600',
+                    }}
+                  >
                     <Image
                       src={marker.src}
                       alt="Marker"
                       width={30}
                       height={30}
-                      className="relative z-10"
+                      style={{ position: 'relative', zIndex: 10 }}
                     />
-                  </div>
-                </div>
-                <p className="text-xs font-medium bg-white px-1 rounded">
-                  {mycase.title}
-                </p>
-              </div>
+                  </Box>
+                </Box>
+                <Paper
+                  elevation={1}
+                  sx={{
+                    px: 0.5,
+                    borderRadius: 1,
+                    backgroundColor: 'white',
+                  }}
+                >
+                  <Typography variant="caption" sx={{ fontSize: '0.75rem', fontWeight: 500 }}>
+                    {mycase.title}
+                  </Typography>
+                </Paper>
+              </Box>
             </Marker>
           );
         })}
@@ -305,8 +350,8 @@ function MapPage() {
             closeOnClick={false}
             anchor="top"
           >
-            <div className="w-64">
-              <div className="flex justify-between items-center mb-2">
+            <Box sx={{ width: 256, p: 1 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                 <Typography variant="subtitle1" fontWeight="bold">
                   {selectedCase.title}
                 </Typography>
@@ -315,11 +360,11 @@ function MapPage() {
                   color={getStatusColor(selectedCase.status)}
                   size="small"
                 />
-              </div>
-              <Typography variant="body2" className="mb-2">
+              </Box>
+              <Typography variant="body2" sx={{ mb: 2 }}>
                 {selectedCase.description}
               </Typography>
-              <div className="flex justify-between mt-3">
+              <Stack direction="row" spacing={1} sx={{ mt: 3 }}>
                 <Button
                   variant="contained"
                   size="small"
@@ -338,8 +383,8 @@ function MapPage() {
                 >
                   Directions
                 </Button>
-              </div>
-            </div>
+              </Stack>
+            </Box>
           </Popup>
         )}
       </Map>
@@ -393,6 +438,12 @@ function MapPage() {
                       </TableBody>
                     </Table>
                   </TableContainer>
+                  <Box mt={2}>
+                    <Typography variant="subtitle1" gutterBottom>
+                      {selectedCase?.additionalNotes || "No additional notes"}
+                    </Typography>
+                    </Box>
+                
                 </CardContent>
               </Card>
             </Grid>
@@ -418,7 +469,7 @@ function MapPage() {
                   </FormControl>
                   <TextField
                     fullWidth
-                    label="Assigned To"
+                    label="Assigned Phone Number"
                     name="assignedTo"
                     value={formData.assignedTo}
                     onChange={handleFormChange}

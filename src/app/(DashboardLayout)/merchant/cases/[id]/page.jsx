@@ -318,7 +318,7 @@ export default function CaseDetailsReport() {
                         {caseData.reporterName} ({caseData.reporterType})
                       </Typography>
                       <Typography variant="body2">
-                        Contact: {caseData.reporterContact}
+                        Contact: {caseData.phoneNumber}
                       </Typography>
                     </Box>
                   </Box>

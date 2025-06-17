@@ -92,6 +92,44 @@ export default function CADDispatchSystem() {
     caseStatus: 'open',
   });
 
+
+  // {
+//   "phone_number": "+263717201539",
+//   "latitude": -17.8292,     
+//   "longitude": 31.0522,
+//   "name": "Accident Scene",
+//   "address": "Near Jason Moyo and Leopord Takawira",
+//   "message": "Case 4563: Assigned to inspector Nzira"
+// }
+const handleSentMessage = async (caseData) => {
+  try {
+    const message = `Case ${caseData.id}, Case Type: ${caseData.title}, Case Status: ${caseData.status}, Reporter Number: ${caseData.phoneNumber}, Assigned to you`;
+    const data = {
+      phone_number: caseData.assignedTo || '+263712495812', // Default or from case data
+      latitude: caseData.latitude || -17.8292, // Default or from case data
+      longitude: caseData.longitude || 31.0522, // Default or from case data
+      name: `CaseId: ${caseData.id}, Title: ${caseData.title}` || 'Report', // Default or from case data
+      address: caseData.address || '', // Default or from case data
+      message: message,
+    };
+    // To api http://4.222.232.224:80/sent-message
+    const response = await fetch('http://4.222.232.224:80/send-message', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      showSnackbar('Failed to send message', 'error');
+    }
+    const result = await response.json();
+    showSnackbar(`Message sent successfully: ${result.message}`, 'success');
+  } catch (error) {
+    console.error('Error sending message:', error);
+    showSnackbar(`Error sending message: ${error.message}`, 'error');
+  }
+};
   const fetchCases = async () => {
     try {
       let filter = '';
@@ -148,7 +186,7 @@ export default function CADDispatchSystem() {
       const data = { ...currentCase, ...dataForm };
       // Use the proper update method
       const record = await pb.collection('cases').update(currentCase.id, data);
-      
+      handleSentMessage(record); // Send message after updating case
       // Update local state
       setCases(prev => prev.map(c => c.id === currentCase.id ? record : c));
       
@@ -265,7 +303,7 @@ export default function CADDispatchSystem() {
                   >
                     <MenuItem value="all">All Statuses</MenuItem>
                     <MenuItem value="open">Open</MenuItem>
-                    <MenuItem value="in progress">In Progress</MenuItem>
+                    <MenuItem value="Ongoing">In Progress</MenuItem>
                     <MenuItem value="resolved">Resolved</MenuItem>
                     <MenuItem value="closed">Closed</MenuItem>
                   </Select>
@@ -469,7 +507,7 @@ export default function CADDispatchSystem() {
                                 <ViewIcon fontSize="small" />
                               </IconButton>
                             </Tooltip>
-                            <Tooltip title="Edit">
+                            {/* <Tooltip title="Edit">
                               <IconButton 
                                 color="warning"
                                 sx={{
@@ -482,8 +520,8 @@ export default function CADDispatchSystem() {
                               >
                                 <EditIcon fontSize="small" />
                               </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Delete">
+                            </Tooltip> */}
+                            {/* <Tooltip title="Delete">
                               <IconButton
                                 color="error"
                                 onClick={() => deleteCase(caseItem.id)}
@@ -497,7 +535,7 @@ export default function CADDispatchSystem() {
                               >
                                 <DeleteIcon fontSize="small" />
                               </IconButton>
-                            </Tooltip>
+                            </Tooltip> */}
                           </Box>
                         </TableCell>
                       </TableRow>
@@ -573,7 +611,7 @@ export default function CADDispatchSystem() {
                     <CardHeader
                       title="Case Information"
                       sx={{
-                        bgcolor: theme.palette.primary.light,
+                        bgcolor: theme.palette.primary.dark,
                         color: theme.palette.primary.contrastText,
                       }}
                     />
@@ -622,7 +660,7 @@ export default function CADDispatchSystem() {
                     <CardHeader
                       title="Location Details"
                       sx={{
-                        bgcolor: theme.palette.primary.light,
+                        bgcolor: theme.palette.primary.dark,
                         color: theme.palette.primary.contrastText,
                       }}
                     />
@@ -672,7 +710,7 @@ export default function CADDispatchSystem() {
                     <CardHeader
                       title="Case Status"
                       sx={{
-                        bgcolor: theme.palette.primary.light,
+                     bgcolor: theme.palette.primary.dark,
                         color: theme.palette.primary.contrastText,
                       }}
                     />
@@ -700,7 +738,7 @@ export default function CADDispatchSystem() {
                           <StepLabel>Case Resolved</StepLabel>
                           <StepContent>
                             <Typography>
-                              {currentCase?.status === 'resolved' ? 
+                              {currentCase?.status === 'Resolved' ? 
                                 'Case has been resolved' : 
                                 'Case is not yet resolved'}
                             </Typography>
@@ -715,7 +753,7 @@ export default function CADDispatchSystem() {
                     <CardHeader
                       title="Update Case"
                       sx={{
-                        bgcolor: theme.palette.primary.light,
+                        bgcolor: theme.palette.primary.dark,
                         color: theme.palette.primary.contrastText,
                       }}
                     />
@@ -740,7 +778,7 @@ export default function CADDispatchSystem() {
                         <Grid item xs={12} md={6}>
                           <TextField
                             fullWidth
-                            label="Assigned To"
+                            label="Assigned Phone Number"
                             name="assignedTo"
                             value={formData.assignedTo}
                             onChange={handleFormChange}

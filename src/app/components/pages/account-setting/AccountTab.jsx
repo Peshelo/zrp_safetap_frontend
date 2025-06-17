@@ -127,7 +127,7 @@ const AccountTab = () => {
               </CustomFormLabel>
               <CustomTextField
                 id="text-cpwd"
-                value="MathewAnderson"
+                value="PeshelGomo"
                 variant="outlined"
                 fullWidth
                 type="password"
@@ -136,7 +136,7 @@ const AccountTab = () => {
               <CustomFormLabel htmlFor="text-npwd">New Password</CustomFormLabel>
               <CustomTextField
                 id="text-npwd"
-                value="MathewAnderson"
+                value="PeshelGomo"
                 variant="outlined"
                 fullWidth
                 type="password"
@@ -145,7 +145,7 @@ const AccountTab = () => {
               <CustomFormLabel htmlFor="text-conpwd">Confirm Password</CustomFormLabel>
               <CustomTextField
                 id="text-conpwd"
-                value="MathewAnderson"
+                value="PeshelGomo"
                 variant="outlined"
                 fullWidth
                 type="password"
@@ -177,7 +177,7 @@ const AccountTab = () => {
                   </CustomFormLabel>
                   <CustomTextField
                     id="text-name"
-                    value="Mathew Anderson"
+                    value="Peshel Gomo"
                     variant="outlined"
                     fullWidth
                   />

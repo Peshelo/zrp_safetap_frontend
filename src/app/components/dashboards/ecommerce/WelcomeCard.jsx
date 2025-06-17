@@ -22,7 +22,7 @@ const WelcomeCard = () => {
               >
                 <Avatar src='/images/profile/user-1.jpg' alt="img" sx={{ width: 40, height: 40 }} />
                 <Typography variant="h5" whiteSpace="nowrap">
-                  Welcome back Mathew Anderson!
+                  Welcome back Officer P. Gomo!
                 </Typography>
               </Box>
 
